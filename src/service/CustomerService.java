@@ -12,7 +12,12 @@ public class CustomerService {
 
     // singleton
     private static CustomerService customerService = null;
-    private CustomerService(){}
+    private CustomerService(){
+        Customer c1 = new Customer("Nguyen", "Hiep", "hiep@gmail.com");
+        Customer c2 = new Customer("Nguyen", "Tuan", "tuan@gmail.com");
+        customerList.add(c1);
+        customerList.add(c2);
+    }
     public static CustomerService getInstance(){
         if(customerService == null){
             customerService = new CustomerService();
@@ -30,6 +35,6 @@ public class CustomerService {
     }
 
     public Collection<Customer> getAllCustomers(){
-        return null;
+        return customerList;
     }
 }

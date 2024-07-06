@@ -11,11 +11,11 @@ import java.util.stream.Collectors;
 
 public class ReservationService {
 
-    private List<Reservation> reservationList = new ArrayList<Reservation>();
-    private List<IRoom> roomList = new ArrayList<IRoom>();
-
     // singleton
     private static ReservationService reservationService = null;
+    private final List<Reservation> reservationList = new ArrayList<Reservation>();
+    private final List<IRoom> roomList = new ArrayList<IRoom>();
+
     private ReservationService() {
         Customer c1 = new Customer("Nguyen", "Hiep", "hiep@gmail.com");
         Customer c2 = new Customer("Nguyen", "Tuan", "tuan@gmail.com");
@@ -35,43 +35,53 @@ public class ReservationService {
 
         }
         Reservation re1 = new Reservation(c1, r1, dateCheckin, dateCheckout);
+        Reservation re2 = new Reservation(c2, r2, dateCheckin, dateCheckout);
         reservationList.add(re1);
+        reservationList.add(re2);
     }
-    public static ReservationService getInstance(){
-        if(reservationService == null){
+
+    public static ReservationService getInstance() {
+        if (reservationService == null) {
             reservationService = new ReservationService();
         }
         return reservationService;
     }
 
-    public void addRoom(IRoom room){
+    public void addRoom(IRoom room) {
+        roomList.add(room);
     }
-    public IRoom getARoom(String roomId){
+
+    public IRoom getARoom(String roomId) {
         return roomList.stream()
-                .filter(item->item.getRoomNumber().equals(roomId))
+                .filter(item -> item.getRoomNumber().equals(roomId))
                 .findFirst()
                 .orElse(null);
     }
-    public Reservation reserveARoom(Customer customer, IRoom room, Date checkInDate, Date checkOutDate){
+
+    public Reservation reserveARoom(Customer customer, IRoom room, Date checkInDate, Date checkOutDate) {
         Reservation reservation = new Reservation(customer, room, checkInDate, checkOutDate);
         reservationList.add(reservation);
         return reservation;
     }
 
-    public Collection<IRoom> findRooms(Date checkInDate, Date checkOutDate){
+    public Collection<IRoom> findRooms(Date checkInDate, Date checkOutDate) {
         return reservationList.stream()
-                .filter(item->item.getCheckOutDate().before(checkInDate))
+                .filter(item -> item.getCheckOutDate().before(checkInDate))
                 .map(Reservation::getRoom)
                 .collect(Collectors.toSet());
     }
 
-    public Collection<Reservation> getCustomersReservation(Customer customer){
+    public Collection<Reservation> getCustomersReservation(Customer customer) {
         return reservationList.stream()
-                .filter(item->item.getCustomer().getEmail().equals(customer.getEmail()))
+                .filter(item -> item.getCustomer().getEmail().equals(customer.getEmail()))
                 .collect(Collectors.toList());
     }
 
-    public void printAllReservation(){
+    public void printAllReservation() {
+        reservationList.forEach(System.out::println);
+    }
 
+    public Collection<IRoom> getAllRooms() {
+        return roomList;
     }
 }

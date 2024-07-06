@@ -18,7 +18,6 @@ import java.util.Scanner;
 public class HotelApplication {
     public static void main(String[] args) {
         HotelResource hotelResource = HotelResource.getInstance();
-        AdminResource adminResource = AdminResource.getInstance();
         Customer userLogin = null;
 
         do{
@@ -96,7 +95,16 @@ public class HotelApplication {
                     }
                     break;
                 case "4":
-                    AdminMenu.display();
+                    boolean admin = true;
+                    do{
+                        AdminMenu.display();
+                        System.out.println("Enter your choice:");
+                        String ad_choice = scanner.nextLine();
+                        if(ad_choice.equals("5")){
+                            admin = false;
+                        }
+                        AdminMenu.handleChoice(ad_choice);
+                    }while(admin);
                     break;
                 case "5":
                     System.out.println("=== Exit App ===");

@@ -25,15 +25,21 @@ public class AdminResource {
     public Customer getCustomer(String email){
         return null;
     }
-    public void addRoom(List<IRoom> rooms){}
+    public void addRoom(List<IRoom> rooms){
+        for (IRoom room : rooms) {
+            reservationService.addRoom(room);
+        }
+    }
 
     public Collection<IRoom> getAllRooms(){
-        return null;
+        return reservationService.getAllRooms();
     }
 
     public Collection<Customer> getAllCustomers(){
-        return null;
+        return customerService.getAllCustomers();
     }
 
-    public void displayAllReservations(){}
+    public void displayAllReservations(){
+        reservationService.printAllReservation();
+    }
 }

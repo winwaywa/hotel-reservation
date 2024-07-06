@@ -48,13 +48,12 @@ public class AdminMenu {
                     System.out.println("Enter price: ");
                     Double price = scanner.nextDouble();
                     scanner.nextLine();
-                    System.out.println("Enter type: ");
-                    System.out.println("1.SINGLE    2.DOUBLE");
+                    System.out.println("Enter type (SINGLE/DOUBLE): ");
                     String type = scanner.nextLine();
                     RoomType typeEnum;
-                    if (type.equals("1")) {
+                    if (type.equals("SINGLE")) {
                         typeEnum = RoomType.SINGLE;
-                    } else if (type.equals("2")) {
+                    } else if (type.equals("DOUBLE")) {
                         typeEnum = RoomType.DOUBLE;
                     } else {
                         throw new InputMismatchException("type room invalid !");

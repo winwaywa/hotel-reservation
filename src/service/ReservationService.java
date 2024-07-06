@@ -27,15 +27,19 @@ public class ReservationService {
 
         Date dateCheckin = null;
         Date dateCheckout = null;
+        Date dateCheckin1 = null;
+        Date dateCheckout1 = null;
         try {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-            dateCheckin = formatter.parse("2024-06-30");
-            dateCheckout = formatter.parse("2024-06-31");
+            dateCheckin = formatter.parse("2024-07-01");
+            dateCheckout = formatter.parse("2024-07-05");
+            dateCheckin1 = formatter.parse("2024-07-07");
+            dateCheckout1 = formatter.parse("2024-07-10");
         } catch (Exception e) {
-
+            System.out.println("Have error when mock data !");
         }
         Reservation re1 = new Reservation(c1, r1, dateCheckin, dateCheckout);
-        Reservation re2 = new Reservation(c2, r2, dateCheckin, dateCheckout);
+        Reservation re2 = new Reservation(c2, r2, dateCheckin1, dateCheckout1);
         reservationList.add(re1);
         reservationList.add(re2);
     }

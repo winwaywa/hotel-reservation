@@ -69,10 +69,15 @@ public class ReservationService {
     }
 
     public Collection<IRoom> findRooms(Date checkInDate, Date checkOutDate) {
+        return roomList.stream()
+                .filter(room -> isRoomAvailable(room, checkInDate, checkOutDate))
+                .collect(Collectors.toList());
+    }
+    private boolean isRoomAvailable(IRoom room, Date checkInDate, Date checkOutDate) {
         return reservationList.stream()
-                .filter(item -> item.getCheckOutDate().before(checkInDate))
-                .map(Reservation::getRoom)
-                .collect(Collectors.toSet());
+                .filter(reservation -> reservation.getRoom().equals(room))
+                .noneMatch(reservation ->
+                        checkInDate.before(reservation.getCheckOutDate()) && checkOutDate.after(reservation.getCheckInDate()));
     }
 
     public Collection<Reservation> getCustomersReservation(Customer customer) {

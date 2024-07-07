@@ -25,7 +25,7 @@ public class AdminResource {
     public Customer getCustomer(String email){
         return null;
     }
-    public void addRoom(List<IRoom> rooms){
+    public void addRoom(List<IRoom> rooms) throws Exception {
         for (IRoom room : rooms) {
             reservationService.addRoom(room);
         }

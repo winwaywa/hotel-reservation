@@ -6,10 +6,7 @@ import model.IRoom;
 import model.Room;
 import model.RoomType;
 
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class AdminMenu {
     static AdminResource adminResource = AdminResource.getInstance();
@@ -30,11 +27,13 @@ public class AdminMenu {
                 System.out.println("=== List all Customers ===");
                 List<Customer> customerList = (List<Customer>) adminResource.getAllCustomers();
                 customerList.forEach(System.out::println);
+                if (customerList.size()==0) System.out.println("Empty !");
                 break;
             case "2":
                 System.out.println("=== List all Rooms ===");
-                List<IRoom> roomList = (List<IRoom>) adminResource.getAllRooms();
+                Set<IRoom> roomList = (Set<IRoom>) adminResource.getAllRooms();
                 roomList.forEach(System.out::println);
+                if (roomList.size()==0) System.out.println("Empty !");
                 break;
             case "3":
                 System.out.println("=== List all Reservations ===");
@@ -62,6 +61,7 @@ public class AdminMenu {
                     List<IRoom> rooms = new ArrayList<>();
                     rooms.add(room);
                     adminResource.addRoom(rooms);
+                    System.out.println("Add room success !");
                 } catch (Exception e) {
                     System.err.println("Error when add room: " + e.getMessage());
                 }

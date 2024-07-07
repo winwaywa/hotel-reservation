@@ -55,32 +55,32 @@ public class HotelApplication {
                         roomList.forEach(System.out::println);
 
                         if(roomList.size() == 0){
-                            String dateCheckinSugStr = dateAddDays(dateCheckinStr, 7);
-                            String dateCheckoutSugStr = dateAddDays(dateCheckinStr, 7);
-                            Date dateCheckinSug;
-                            Date dateCheckoutSug;
+                            System.out.println("No rooms found from "+ dateCheckinStr + " to " + dateCheckoutStr +" !");
+
+                            dateCheckinStr = dateAddDays(dateCheckinStr, 7);
+                            dateCheckoutStr = dateAddDays(dateCheckoutStr, 7);
                             try {
-                                dateCheckinSug = formatter.parse(dateCheckinSugStr);
-                                dateCheckoutSug = formatter.parse(dateCheckoutSugStr);
+                                dateCheckin = formatter.parse(dateCheckinStr);
+                                dateCheckout = formatter.parse(dateCheckoutStr);
                             } catch (ParseException e) {
                                 throw new Exception("invalid input date !");
                             }
 
-                            System.out.println("No rooms found from "+ dateCheckinStr + " to " + dateCheckoutStr +" !");
-                            Collection<IRoom> roomListSug = hotelResource.findARoom(dateCheckinSug, dateCheckoutSug);
-                            if (roomListSug.size()>0){
-                                System.out.println("Recommended room list from "+ dateCheckinSugStr + " to " + dateCheckoutSugStr +" !");
-                                roomListSug.forEach(System.out::println);
+                            roomList = hotelResource.findARoom(dateCheckin, dateCheckout);
+                            if (roomList.size()>0){
+                                System.out.println("Recommended room list from "+ dateCheckinStr + " to " + dateCheckoutStr +":");
+                                roomList.forEach(System.out::println);
                             }else{
-                                System.out.println("No recommended rooms found !");
+                                System.out.println("No recommended rooms found "+ dateCheckinStr + " to " + dateCheckoutStr +" !");
                                 break;
                             }
                         }
 
+
                         System.out.println("=== Reserve a room ===");
                         System.out.println("Enter room number in above list: ");
                         String roomNumber = scanner.nextLine();
-                        IRoom room = hotelResource.getRoom(roomNumber);
+                        IRoom room = roomList.stream().filter(r->r.getRoomNumber().equals(roomNumber)).findFirst().orElse(null);
                         if(room == null){
                             System.out.println("room number invalid !");
                             break;
